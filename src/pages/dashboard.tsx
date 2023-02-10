@@ -76,16 +76,22 @@ const Dashboard = () => {
   };
 
   const checkLogin = async () => {
-    const { data } = await axios.get("http://localhost:8080/check",{
+
+    await axios.get("http://localhost:8080/check",{
       headers: {
         'Authorization': `Bearer ${localStorage.getItem("token")}` 
       }
-    });
-    console.log(data.data)
-    if (data.data == false){
-      localStorage.clear()
+    }).then((data)=>{
+      console.log(data.data)
+      if (data.data == false){
+        localStorage.clear()
+        Router.push('/')
+      }
+    })
+    .catch((e)=>{
       Router.push('/')
-    }
+    });
+   
   };
 
   useEffect(() => {
